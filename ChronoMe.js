@@ -7,9 +7,46 @@ var ChronoMe = {
 
 	'chronos': {},
 
+	'Chrono': function(){
+
+		var CHRONO_RUNNING = 'CHRONO_RUNNING';
+		var CHRONO_STOP = 'CHRONO_STOP';
+
+		this.status = CHRONO_RUNNING;
+		this.start = (new Date()).getTime();
+		this.end = 0;
+
+
+		this.stop = function(){
+			if( this.status != CHRONO_RUNNING ){
+				console.error("Chrono isn't started");
+				return false;
+			}
+			this.end = (new Date()).getTime();
+			this.status = CHRONO_STOP;
+			return true;
+		};
+
+		this.restart = function(){
+			this.status = CHRONO_RUNNING;
+			this.start = (new Date()).getTime();
+			this.end = 0;
+			return true;
+		};
+
+		this.value = function(){
+			if( this.status != CHRONO_STOP ){
+				console.error("Chrono isn't stopped");
+				return false;
+			}
+			return (this.end - this.start);
+		};
+
+	},
+
 	//	Start Chrono $name
     'start': function( name ){
-		ChronoMe.chronos[ name ] = new ChronoMe.prototype.Chrono();
+		ChronoMe.chronos[ name ] = new ChronoMe.Chrono();
     },
 
     //	Stop Chrono $name
@@ -36,41 +73,5 @@ var ChronoMe = {
         console.dir( chronos );
         return chronos;
     }
-
-};
-ChronoMe.Chrono = function(){
-
-	var CHRONO_RUNNING = 'CHRONO_RUNNING';
-	var CHRONO_STOP = 'CHRONO_STOP';
-
-	this.status = CHRONO_RUNNING;
-	this.start = (new Date()).getTime();
-	this.end = 0;
-
-
-	this.stop = function(){
-		if( this.status != CHRONO_RUNNING ){
-			console.error("Chrono isn't started");
-			return false;
-		}
-		this.end = (new Date()).getTime();
-		this.status = CHRONO_STOP;
-		return true;
-	};
-
-	this.restart = function(){
-		this.status = CHRONO_RUNNING;
-		this.start = (new Date()).getTime();
-		this.end = 0;
-		return true;
-	};
-
-	this.value = function(){
-		if( this.status != CHRONO_STOP ){
-			console.error("Chrono isn't stopped");
-			return false;
-		}
-		return (this.end - this.start);
-	};
 
 };
