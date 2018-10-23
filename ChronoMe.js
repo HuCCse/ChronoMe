@@ -38,7 +38,7 @@ var ChronoMe = {
     }
 
 };
-ChronoMe.prototype.Chrono = function(){
+ChronoMe.Chrono = function(){
 
 	var CHRONO_RUNNING = 'CHRONO_RUNNING';
 	var CHRONO_STOP = 'CHRONO_STOP';
